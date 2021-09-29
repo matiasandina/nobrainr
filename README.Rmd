@@ -1,0 +1,101 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# nobrainr
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of nobrainr is to provide a simple interface to plot plates from the [Mouse Allen Brain Atlas](https://mouse.brain-map.org/experiment/thumbnails/100048576?image_type=atlas).
+
+## Installation
+
+You can install the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("matiasandina/nobrainr")
+```
+## Examples
+
+### Plot atlas plate based on AP
+
+```{r plot-atlas}
+library(nobrainr)
+## basic example code
+plot_atlas(AP = 0,half = F)
+```
+
+You can also use the `bw` argument to get the `bw` version.
+
+```{r plot-atlas-bw}
+plot_atlas(AP = 0,half = F, bw = T)
+```
+
+### Plot multiple atlas plates
+
+A little bit of knowledge in R can help manipulate the resulting `ggplot2` object. We can use `verbose = FALSE` to avoid all the user feedback.
+
+```{r plot-list, warning=F, message=FALSE}
+# AP values need not be exact, they are rounded to correct plates
+desired_AP <- seq(1, -6, -1)
+plot_list <- 
+purrr::map(
+  desired_AP,
+  ~plot_atlas(AP=.x, half=T, verbose=F) + 
+    ggplot2::labs(title = glue::glue("AP = {.x} mm"))
+)
+cowplot::plot_grid(plotlist = plot_list)
+```
+
+### Export
+
+If you want to export the plots to an `svg` format for presentation you can use the `ggsave` function from the `ggplot2` package.
+
+```{r ggsave, eval=F}
+p1 <- plot_atlas(0)
+ggplot2::ggsave(filename = "plot_title.svg", 
+                plot = p1) # <- will save to the local directory, check ?ggsave
+```
+
+
+### Plot counts calculated elsewhere
+
+This package comes with data that contains cell counts in different brain regions.
+
+```{r show-trial-df}
+trial_df
+```
+
+You can plot the counts using `plot_roi_counts()`. 
+
+```{r plot-roi-counts}
+plot_roi_counts(trial_df, AP=1.1, half=FALSE)
+```
+
+Mind that not all AP levels are present on this sample data. Within each AP, not all ROIs have data either. Because we can't plot nonexistent data, `nobrainr` will throw an error.
+
+```{r error-example, error=TRUE}
+plot_roi_counts(count_df = trial_df, AP=1, half=FALSE)
+```
+
+
+## Contribute
+
+This is a preliminary release. Please file [issues](https://github.com/matiasandina/nobrainr/issues) to improve the package.
+
+## Acknowledgements
+
+This package contains data coming from [wholebrain](https://github.com/tractatus/wholebrain) package.
