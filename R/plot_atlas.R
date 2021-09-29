@@ -1,6 +1,6 @@
 # this will only plot the atlas coloring
 #' @export
-plot_atlas <- function(AP, half = TRUE, bw=FALSE, include_legend=FALSE) {
+plot_atlas <- function(AP, half = TRUE, bw=FALSE, include_legend=FALSE, verbose=TRUE) {
   stopifnot(is.numeric(AP))
   # generate the data using helper functions
   df <- generate_atlas_data(AP, half = half)
@@ -21,7 +21,7 @@ plot_atlas <- function(AP, half = TRUE, bw=FALSE, include_legend=FALSE) {
   # plot atlas filling by roi or not
   if (isTRUE(bw)){
     # user feedback
-    usethis::ui_info("BW coloring")
+    if (verbose) usethis::ui_info("BW coloring")
     # mutate to gray90 everything except fiber tracts
     df <- df %>% dplyr::mutate(df, style = dplyr::if_else(parent == "fiber tracts",
                                                           style,
@@ -45,7 +45,7 @@ plot_atlas <- function(AP, half = TRUE, bw=FALSE, include_legend=FALSE) {
       )
   } else {
     # user feedback
-    usethis::ui_info("Coloring by parent ROI")
+    if (verbose) usethis::ui_info("Coloring by parent ROI")
     right_plot <-
       right_plot +
       ggplot2::geom_polygon(
