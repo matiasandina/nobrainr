@@ -1,3 +1,12 @@
+#' @title Generate Atlas Data
+#' @description This function generates the atlas data needed to plot. You can use it to generate your own custom plots.
+#' @param AP (required) `numeric` AP in mm from bregma. Will be rounded by [roundAP()].
+#' @param half `boolean` whether to plot half or full section. Default is TRUE.
+#' @seealso [plot_atlas()], [roundAP()]
+#' @return A `data.frame` with path information and style information that can be used to plot the atlas plates.
+#' @md
+#' @export
+#'
 generate_atlas_data <- function(AP, half = TRUE) {
   stopifnot(is.numeric(AP))
   # find the plate based on AP

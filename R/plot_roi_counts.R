@@ -1,4 +1,12 @@
+#' @title Plot ROI counts
+#' @description This function will plot a desired coronal plate using the desired `AP` level in mm from bregma. It will color each roi using the counts provided in `count_df`.
+#' @param count_df (required) `data.frame` with counts per region (see `trial_df` for example).
+#' @param AP (required) `numeric` AP in mm from bregma. Will be rounded by [roundAP()].
+#' @param half `boolean` whether to plot half or full section. Default is TRUE.
+#' @seealso [plot_atlas()], [roundAP()]
+#' @md
 #' @export
+#'
 plot_roi_counts <- function(count_df, AP, half=TRUE){
   stopifnot(is.numeric(AP))
   stopifnot(is.data.frame(count_df))

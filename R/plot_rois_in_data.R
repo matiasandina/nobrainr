@@ -8,7 +8,7 @@ plot_rois_in_data <- function(count_df, AP, half = TRUE) {
   df <- generate_atlas_data(AP, half = half)
   # make sure we only have the plate we are looking for
   count_df <-
-    dplyr::filter(count_df, mm.from.bregma == roundAP(AP)) %>%
+    dplyr::filter(count_df, mm_from_bregma == roundAP(AP)) %>%
     # select the columns we care about
     dplyr::select(value, parent, side)
   if (nrow(count_df) <= 0) {

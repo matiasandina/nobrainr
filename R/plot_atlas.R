@@ -1,5 +1,14 @@
-# this will only plot the atlas coloring
+#' @title Plot Atlas
+#' @description This function will plot a desired coronal plate using the desired `AP` level in mm from bregma.
+#' @param AP (required) `numeric` AP in mm from bregma. Will be rounded by [roundAP()].
+#' @param half `boolean` whether to plot half or full section. Default is TRUE.
+#' @param bw `boolean` whether to plot using standard Allen Atlas colors or in black and white. Default is FALSE.
+#' @param include_legend `boolean` whether to include legend with the regions. Default is FALSE.
+#' @param verbose `boolean` whether to give feedback. Default to TRUE.
+#' @seealso [roundAP()]
+#' @md
 #' @export
+
 plot_atlas <- function(AP, half = TRUE, bw=FALSE, include_legend=FALSE, verbose=TRUE) {
   stopifnot(is.numeric(AP))
   # generate the data using helper functions

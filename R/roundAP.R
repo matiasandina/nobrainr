@@ -1,3 +1,8 @@
+#' @title Round AP
+#' @md
+#' @param AP `numeric` AP coordinate in mm from bregma.
+#' @param plane `string` must be "coronal" in this version of the package. "Sagittal" not yet supported.
+#' @return The rounded `AP` value to the closest plane in the `atlasIndex` dataset.
 #' @export
 roundAP <- function (AP, plane = "coronal") {
   if (!plane %in% c("coronal", "sagittal")) {
